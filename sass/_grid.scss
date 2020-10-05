@@ -1,0 +1,111 @@
+$cols: 12;
+$gutter: 20px;
+$desktop: 1200px;
+$tablet: 760px;
+$mobile: 480px;
+
+@mixin device($size) {
+  @if $size == desktop {
+    @media screen and (min-width: $desktop) {
+      @content;
+    }
+  } @else if $size == tablet {
+    @media screen and (min-width: $tablet) and (max-width: $desktop - 1) {
+      @content;
+    }
+  } @else if $size == mobile {
+    @media screen and (max-width: $tablet - 1) {
+      @content;
+    }
+  }
+}
+
+@function grid($col, $offset: false) {
+  $width: $col / $cols * 100 + "%";
+  $resut: calc(#{$width} - #{$gutter});
+  @if $offset == offset {
+    $gutter: $gutter / 2;
+    $resut: calc(#{$width} + #{$gutter});
+  }
+  @return $resut;
+}
+
+@for $i from 1 through $cols {
+  .grid-#{$i} {
+    width: grid($i);
+  }
+}
+
+@mixin grid-structure {
+  float: left;
+  min-height: 1px;
+  margin: 0 $gutter / 2;
+  @include device(mobile) {
+    width: 100%;
+    float: none;
+    margin: 0 0;
+  }
+}
+
+[class^="grid-"] {
+  @include grid-structure;
+}
+
+@for $i from 1 through $cols {
+  .offset-#{$i} {
+    margin-left: grid($i, offset);
+    @extend %offset;
+  }
+}
+
+@include device(mobile) {
+  %offset {
+    margin-left: 0px;
+  }
+}
+
+@mixin clearfix {
+  &::after,
+  &::before {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin container {
+  max-width: $desktop;
+  margin: 10px auto;
+  position: relative;
+  @include device(tablet) {
+    max-width: $tablet;
+  }
+  @include device(mobile) {
+    max-width: $mobile;
+    padding: 0 10px;
+  }
+  @include clearfix;
+}
+
+.container {
+  @include container;
+}
+
+@mixin row {
+  position: relative;
+  margin: 0 -$gutter / 2;
+  @include device(mobile) {
+    margin: 0 0;
+  }
+  @include clearfix;
+}
+
+.row {
+  @include row;
+}
+
+div {
+  background-color: rgba(0, 0, 0, 0.5);
+  min-height: 50px !important;
+  margin-bottom: 20px !important;
+}
