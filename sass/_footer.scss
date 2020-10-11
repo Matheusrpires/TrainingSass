@@ -1,0 +1,28 @@
+footer {
+  padding: 20px 0;
+  background-color: $cinza;
+  @include box-shadow(0 0 0 10px $cinza);
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    @include device(mobile) {
+      flex-direction: column;
+    }
+  }
+
+  p {
+    color: $bege-claro;
+    @include device(mobile) {
+      text-align: center;
+    }
+  }
+
+  a img {
+    float: right;
+    @include device(mobile) {
+      float: none;
+      margin: 20px auto;
+    }
+  }
+}

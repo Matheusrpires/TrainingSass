@@ -1,5 +1,14 @@
 @import "reset";
 @import "grid";
+@import "variables-mixins";
+@import "geral";
+
+@import "intro";
+@import "menu";
+@import "contato";
+@import "footer";
+
+@import url("https://fonts.googleapis.com/css2?family=PT+Mono&display=swap");
 
 * {
   font-family: "Aref Ruqaa", serif;
